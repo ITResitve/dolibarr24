@@ -30,7 +30,7 @@ jobs:
       # First run uploads everything; later runs upload only changed/new files
       # and delete removed ones, using .ftp-deploy-sync-state.json stored on the server.
       - name: Sync files to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
