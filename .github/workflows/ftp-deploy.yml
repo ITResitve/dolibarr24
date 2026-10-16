@@ -18,6 +18,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Normalize server dir (must end with /)
+        id: dir
+        env:
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          d="${FTP_SERVER_DIR:-./}"
+          d="${d%/}/"
+          echo "path=$d" >> "$GITHUB_OUTPUT"
+
       # First run uploads everything; later runs upload only changed/new files
       # and delete removed ones, using .ftp-deploy-sync-state.json stored on the server.
       - name: Sync files to FTP
@@ -28,7 +37,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT || 21 }}
           protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
+          server-dir: ${{ steps.dir.outputs.path }}
           local-dir: ./
           exclude: |
             **/.git*
