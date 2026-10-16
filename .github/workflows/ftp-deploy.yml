@@ -1,0 +1,41 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Sync to FTP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # First run uploads everything; later runs upload only changed/new files
+      # and delete removed ones, using .ftp-deploy-sync-state.json stored on the server.
+      - name: Sync files to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT || 21 }}
+          protocol: ${{ secrets.FTP_PROTOCOL || 'ftp' }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR || './' }}
+          local-dir: ./
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            **/node_modules/**
+            htdocs/conf/conf.php
+            documents/**
+            test/**
+            dev/**
