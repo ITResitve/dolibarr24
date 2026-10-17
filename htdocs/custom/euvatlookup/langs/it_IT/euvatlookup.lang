@@ -53,3 +53,5 @@ EuVatLookupCanFill = Può compilare in Dolibarr
 EuVatLookupHintProfId = ID professionale (numero di registro)
 EuVatLookupHintCapital = Capitale sociale
 EuVatLookupHintLegalForm = Forma giuridica
+EuVatLookupRegisterVatConfirm = Cercare nel registro tedesco per partita IVA? Usa 10 crediti OpenRegister e trova solo le aziende il cui impressum del sito web è indicizzato. Per cercare per nome, inserire prima il nome.
+EuVatLookupRegisterHintDe = Azienda tedesca: inserire il nome dell'azienda nel campo Nome e fare clic su "Cerca nel registro tedesco" (oppure fare clic con la sola partita IVA compilata).

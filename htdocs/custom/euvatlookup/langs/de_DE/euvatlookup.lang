@@ -53,3 +53,5 @@ EuVatLookupCanFill = Kann in Dolibarr füllen
 EuVatLookupHintProfId = Professionelle ID (Registernummer)
 EuVatLookupHintCapital = Stammkapital
 EuVatLookupHintLegalForm = Rechtsform
+EuVatLookupRegisterVatConfirm = Im deutschen Register nach USt-IdNr. suchen? Das verbraucht 10 OpenRegister-Credits und findet nur Unternehmen, deren Website-Impressum indexiert ist. Für die Suche nach Name geben Sie zuerst den Namen ein.
+EuVatLookupRegisterHintDe = Deutsches Unternehmen: Geben Sie den Firmennamen im Feld Name ein und klicken Sie auf "Im deutschen Register suchen" (oder klicken Sie mit nur ausgefüllter USt-IdNr.).

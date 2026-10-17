@@ -53,3 +53,5 @@ EuVatLookupCanFill = Lahko izpolni v Dolibarrju
 EuVatLookupHintProfId = Poslovni ID (matična številka registra)
 EuVatLookupHintCapital = Osnovni kapital
 EuVatLookupHintLegalForm = Pravna oblika
+EuVatLookupRegisterVatConfirm = Iščem v nemškem registru po davčni številki? Porabi 10 kreditov OpenRegister in najde samo podjetja, katerih impresum spletne strani je indeksiran. Za iskanje po nazivu najprej vpišite naziv.
+EuVatLookupRegisterHintDe = Nemško podjetje: vpišite naziv podjetja v polje Naziv in kliknite "Išči v nemškem registru" (ali kliknite, ko je vpisana samo davčna številka).

@@ -43,7 +43,7 @@ class OpenRegisterClient
 	 * @param  string $path Path after /v1/ (already url encoded)
 	 * @return array<string,mixed>|null  Decoded JSON or null on error (see $this->error)
 	 */
-	private function get($path)
+	private function get($path, $body = null)
 	{
 		$this->error = '';
 		$key = getDolGlobalString('EUVATLOOKUP_OPENREGISTER_KEY');
@@ -52,7 +52,11 @@ class OpenRegisterClient
 			return null;
 		}
 
-		$res = getURLContent(self::BASE_URL.$path, 'GET', '', 1, array('Accept: application/json', 'Authorization: Bearer '.$key), array('https'), 0, -1, 5, 20);
+		$headers = array('Accept: application/json', 'Authorization: Bearer '.$key);
+		if ($body !== null) {
+			$headers[] = 'Content-Type: application/json';
+		}
+		$res = getURLContent(self::BASE_URL.$path, $body !== null ? 'POST' : 'GET', $body !== null ? json_encode($body) : '', 1, $headers, array('https'), 0, -1, 5, 20);
 		$json = json_decode($res['content'], true);
 		$code = (int) $res['http_code'];
 
@@ -80,7 +84,29 @@ class OpenRegisterClient
 	 */
 	public function search($query)
 	{
-		$json = $this->get('autocomplete/company?query='.rawurlencode($query));
+		return $this->normalize($this->get('autocomplete/company?query='.rawurlencode($query)));
+	}
+
+	/**
+	 * Search a company by German VAT ID (filter vat_id of the advanced search, costs 10 credits).
+	 * Only finds companies whose website imprint is indexed by OpenRegister.
+	 *
+	 * @param  string $vat German VAT ID, e.g. DE265054603
+	 * @return array<int,array<string,mixed>>|null  Normalized results or null on error
+	 */
+	public function searchByVat($vat)
+	{
+		return $this->normalize($this->get('search/company', array('filters' => array(array('field' => 'vat_id', 'values' => array($vat))))));
+	}
+
+	/**
+	 * Normalize the results of a company search.
+	 *
+	 * @param  array<string,mixed>|null $json Decoded response
+	 * @return array<int,array<string,mixed>>|null
+	 */
+	private function normalize($json)
+	{
 		if ($json === null) {
 			return null;
 		}

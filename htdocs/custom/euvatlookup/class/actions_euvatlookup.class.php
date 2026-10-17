@@ -81,7 +81,7 @@ class ActionsEuvatlookup
 			'Differences', 'Field', 'Current', 'FromVies', 'Overwrite', 'ApplySelected', 'NotSavedYet', 'Duplicates',
 			'FieldName', 'FieldAddress', 'FieldZip', 'FieldTown', 'FieldCountry', 'FieldVat', 'EnterVat',
 			'RegisterButton', 'RegisterNameShort', 'RegisterError', 'RegisterAuth', 'RegisterLimit', 'RegisterNone',
-			'RegisterPick', 'RegisterUse', 'RegisterInactive') as $key) {
+			'RegisterPick', 'RegisterUse', 'RegisterInactive', 'RegisterVatConfirm', 'RegisterHintDe') as $key) {
 			$texts[$key] = $langs->transnoentitiesnoconv('EuVatLookup'.$key);
 		}
 

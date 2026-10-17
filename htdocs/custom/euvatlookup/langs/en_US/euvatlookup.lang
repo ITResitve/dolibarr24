@@ -53,3 +53,5 @@ EuVatLookupCanFill = Can fill in Dolibarr
 EuVatLookupHintProfId = Professional ID (register number)
 EuVatLookupHintCapital = Share capital
 EuVatLookupHintLegalForm = Legal form
+EuVatLookupRegisterVatConfirm = Search the German register by VAT number? This uses 10 OpenRegister credits and only finds companies whose website imprint is indexed. To search by name instead, type the name first.
+EuVatLookupRegisterHintDe = German company: type the company name in the Name field and click "Search German register" (or click it with only the VAT number filled in).

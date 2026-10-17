@@ -64,14 +64,24 @@ jQuery(document).ready(function ($) {
 		$btn.after($rbtn);
 		$rbtn.on('click', function () {
 			var q = $.trim($('#name').val() || '');
+			var vatnum = $.trim($vat.val() || '').replace(/[\s.\-]/g, '').toUpperCase();
+			var params;
 			$box.empty();
-			if (q.length < 3) {
+			if (q.length >= 3) {
+				params = { action: 'search', q: q };
+			} else if (/^DE\d{9}$/.test(vatnum)) {
+				// No name typed: look up by German VAT ID (costs 10 credits, only works if the company website imprint is indexed)
+				if (!window.confirm(T.RegisterVatConfirm)) {
+					return;
+				}
+				params = { action: 'vat', vat: vatnum };
+			} else {
 				$box.append(msg('error', T.RegisterNameShort));
 				return;
 			}
 			$rbtn.prop('disabled', true);
 			$box.append(msg('opacitymedium', T.Checking));
-			$.getJSON(cfg.registerUrl, { action: 'search', q: q })
+			$.getJSON(cfg.registerUrl, params)
 				.done(function (d) {
 					$box.empty();
 					if (d.status !== 'ok') {
@@ -171,6 +181,9 @@ jQuery(document).ready(function ($) {
 
 		if (!hasData) {
 			$box.append(msg('opacitymedium', T.NoData));
+			if (cfg.registerUrl && /^DE/.test(String(r.vat || ''))) {
+				$box.append(msg('opacitymedium', T.RegisterHintDe));
+			}
 			return;
 		}
 		if (filled.length) {

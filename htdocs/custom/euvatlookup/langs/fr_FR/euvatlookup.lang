@@ -53,3 +53,5 @@ EuVatLookupCanFill = Peut remplir dans Dolibarr
 EuVatLookupHintProfId = ID professionnel (numéro de registre)
 EuVatLookupHintCapital = Capital social
 EuVatLookupHintLegalForm = Forme juridique
+EuVatLookupRegisterVatConfirm = Chercher dans le registre allemand par numéro de TVA ? Cela utilise 10 crédits OpenRegister et ne trouve que les entreprises dont les mentions légales du site web sont indexées. Pour chercher par nom, saisissez d'abord le nom.
+EuVatLookupRegisterHintDe = Entreprise allemande : saisissez le nom de l'entreprise dans le champ Nom et cliquez sur "Chercher dans le registre allemand" (ou cliquez avec seulement le numéro de TVA renseigné).

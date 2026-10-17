@@ -57,13 +57,22 @@ if (!isModEnabled('euvatlookup') || !$user->hasRight('societe', 'creer') || ($ac
 
 $client = new OpenRegisterClient();
 
-if ($action == 'search') {
-	$q = trim(GETPOST('q', 'alphanohtml'));
-	if (dol_strlen($q) < 3) {
-		print json_encode(array('status' => 'too_short'));
-		exit;
+if ($action == 'search' || $action == 'vat') {
+	if ($action == 'vat') {
+		$vat = strtoupper(preg_replace('/[\s.\-]/', '', GETPOST('vat', 'alphanohtml')));
+		if (!preg_match('/^DE\d{9}$/', $vat)) {
+			print json_encode(array('status' => 'bad_vat'));
+			exit;
+		}
+		$results = $client->searchByVat($vat);
+	} else {
+		$q = trim(GETPOST('q', 'alphanohtml'));
+		if (dol_strlen($q) < 3) {
+			print json_encode(array('status' => 'too_short'));
+			exit;
+		}
+		$results = $client->search($q);
 	}
-	$results = $client->search($q);
 	if ($results === null) {
 		print json_encode(array('status' => $client->error == 'NO_KEY' ? 'no_key' : ($client->error == 'AUTH' ? 'auth' : ($client->error == 'LIMIT' ? 'limit' : 'error'))));
 		exit;
