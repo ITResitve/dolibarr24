@@ -1,0 +1,27 @@
+# Dolibarr language file - Source file is en_US - euvatlookup
+ModuleEuVatLookupName = EU VAT Lookup
+EuVatLookupDescription = Check an EU VAT number on VIES and fill the third party form
+EuVatLookupDescriptionLong = Adds a button next to the VAT number on the third party form. The VAT number is checked on the official EU VIES service and the company name, address, zip, town and country are filled in the form. Empty fields are filled, fields with a different value are only changed after confirmation. Nothing is saved until you click Save.
+EuVatLookupButton = Check VIES and fill
+EuVatLookupChecking = Checking VAT number on VIES...
+EuVatLookupValid = VAT number is valid (VIES)
+EuVatLookupNotValid = VAT number is not valid or not registered in VIES
+EuVatLookupServiceError = VIES service is not available or did not answer. Try again later.
+EuVatLookupNoData = VAT number is valid but VIES does not publish company data for this country.
+EuVatLookupFilled = Filled:
+EuVatLookupAlreadyUpToDate = The form already contains the same data.
+EuVatLookupDifferences = These fields already contain a different value. Tick the ones you want to replace:
+EuVatLookupField = Field
+EuVatLookupCurrent = Current value
+EuVatLookupFromVies = Value from VIES
+EuVatLookupOverwrite = Replace
+EuVatLookupApplySelected = Replace selected
+EuVatLookupNotSavedYet = Nothing is saved yet. Check the data and click Save.
+EuVatLookupDuplicates = Warning, a third party with this VAT number already exists:
+EuVatLookupFieldName = Name
+EuVatLookupFieldAddress = Address
+EuVatLookupFieldZip = Zip
+EuVatLookupFieldTown = Town
+EuVatLookupFieldCountry = Country
+EuVatLookupFieldVat = VAT number
+EuVatLookupEnterVat = Enter a VAT number first (for example SI12345678).

@@ -1,0 +1,27 @@
+# Dolibarr language file - sl_SI - euvatlookup
+ModuleEuVatLookupName = EU DDV iskanje
+EuVatLookupDescription = Preveri EU davčno številko v VIES in izpolni obrazec partnerja
+EuVatLookupDescriptionLong = Doda gumb ob davčni številki na obrazcu partnerja. Davčna številka se preveri v uradnem EU sistemu VIES, naziv, naslov, pošta, kraj in država pa se vpišejo v obrazec. Prazna polja se izpolnijo, polja z drugačno vrednostjo se spremenijo le po potrditvi. Nič se ne shrani, dokler ne kliknete Shrani.
+EuVatLookupButton = Preveri VIES in izpolni
+EuVatLookupChecking = Preverjam davčno številko v VIES...
+EuVatLookupValid = Davčna številka je veljavna (VIES)
+EuVatLookupNotValid = Davčna številka ni veljavna ali ni registrirana v VIES
+EuVatLookupServiceError = Storitev VIES ni dosegljiva ali ni odgovorila. Poskusite pozneje.
+EuVatLookupNoData = Davčna številka je veljavna, vendar VIES za to državo ne objavlja podatkov o podjetju.
+EuVatLookupFilled = Izpolnjeno:
+EuVatLookupAlreadyUpToDate = Obrazec že vsebuje enake podatke.
+EuVatLookupDifferences = Ta polja že vsebujejo drugačno vrednost. Označite tista, ki jih želite zamenjati:
+EuVatLookupField = Polje
+EuVatLookupCurrent = Trenutna vrednost
+EuVatLookupFromVies = Vrednost iz VIES
+EuVatLookupOverwrite = Zamenjaj
+EuVatLookupApplySelected = Zamenjaj izbrana
+EuVatLookupNotSavedYet = Še nič ni shranjeno. Preverite podatke in kliknite Shrani.
+EuVatLookupDuplicates = Pozor, partner s to davčno številko že obstaja:
+EuVatLookupFieldName = Naziv
+EuVatLookupFieldAddress = Naslov
+EuVatLookupFieldZip = Poštna številka
+EuVatLookupFieldTown = Kraj
+EuVatLookupFieldCountry = Država
+EuVatLookupFieldVat = Davčna številka
+EuVatLookupEnterVat = Najprej vpišite davčno številko (npr. SI12345678).
