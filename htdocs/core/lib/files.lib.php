@@ -2992,7 +2992,7 @@ function dol_compress_dir($inputdir, $outputfile, $mode = "zip", $excludefiles =
 						$relativePath = ($rootdirinzip ? $rootdirinzip.'/' : '').substr(($filePath ? $filePath.'/' : '').$fileName, strlen($inputdir) + 1);
 
 						//var_dump($filePath);var_dump($fileFullRealPath);var_dump($relativePath);
-						if (empty($excludefiles) || !preg_match($excludefiles, $fileFullRealPath)) {
+						if (empty($excludefiles) || !preg_match($excludefiles, str_replace('\\', '/', $fileFullRealPath))) {
 							// Add current file to archive
 							$zip->addFile($fileFullRealPath, $relativePath);
 						}
