@@ -74,16 +74,21 @@ class ActionsEuvatlookup
 
 		$langs->load('euvatlookup@euvatlookup');
 
+		require_once __DIR__.'/OpenRegisterClient.php';
+
 		$texts = array();
 		foreach (array('Button', 'Checking', 'Valid', 'NotValid', 'ServiceError', 'NoData', 'Filled', 'AlreadyUpToDate',
 			'Differences', 'Field', 'Current', 'FromVies', 'Overwrite', 'ApplySelected', 'NotSavedYet', 'Duplicates',
-			'FieldName', 'FieldAddress', 'FieldZip', 'FieldTown', 'FieldCountry', 'FieldVat', 'EnterVat') as $key) {
+			'FieldName', 'FieldAddress', 'FieldZip', 'FieldTown', 'FieldCountry', 'FieldVat', 'EnterVat',
+			'RegisterButton', 'RegisterNameShort', 'RegisterError', 'RegisterAuth', 'RegisterLimit', 'RegisterNone',
+			'RegisterPick', 'RegisterUse', 'RegisterInactive') as $key) {
 			$texts[$key] = $langs->transnoentitiesnoconv('EuVatLookup'.$key);
 		}
 
 		print "\n<!-- EuVatLookup -->\n";
 		print '<script>window.euVatLookupConfig = '.json_encode(array(
 			'url' => dol_buildpath('/euvatlookup/ajax/lookup.php', 1),
+			'registerUrl' => OpenRegisterClient::isConfigured() ? dol_buildpath('/euvatlookup/ajax/openregister.php', 1) : '',
 			'socid' => (int) GETPOSTINT('socid'),
 			'texts' => $texts,
 		)).';</script>'."\n";

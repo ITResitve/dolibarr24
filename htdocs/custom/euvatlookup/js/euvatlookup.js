@@ -58,6 +58,51 @@ jQuery(document).ready(function ($) {
 		return String(a).replace(/\s+/g, ' ').toUpperCase() === String(b).replace(/\s+/g, ' ').toUpperCase();
 	}
 
+	// German company register (Handelsregister, via OpenRegister): only if an API key is set in the module setup
+	if (cfg.registerUrl) {
+		var $rbtn = $('<button type="button" class="button smallpaddingimp euvatlookup-btn"></button>').text(T.RegisterButton).css('margin-left', '6px');
+		$btn.after($rbtn);
+		$rbtn.on('click', function () {
+			var q = $.trim($('#name').val() || '');
+			$box.empty();
+			if (q.length < 3) {
+				$box.append(msg('error', T.RegisterNameShort));
+				return;
+			}
+			$rbtn.prop('disabled', true);
+			$box.append(msg('opacitymedium', T.Checking));
+			$.getJSON(cfg.registerUrl, { action: 'search', q: q })
+				.done(function (d) {
+					$box.empty();
+					if (d.status !== 'ok') {
+						$box.append(msg('error', d.status === 'auth' ? T.RegisterAuth : (d.status === 'limit' ? T.RegisterLimit : T.RegisterError)));
+						return;
+					}
+					if (!d.results.length) {
+						$box.append(msg('opacitymedium', T.RegisterNone));
+						return;
+					}
+					$box.append(msg('', T.RegisterPick));
+					var $tbl = $('<table class="noborder"></table>');
+					$.each(d.results, function (i, c) {
+						var $use = $('<button type="button" class="button smallpaddingimp"></button>').text(T.RegisterUse).on('click', function () {
+							$box.empty();
+							applyData({ name: c.name, street: c.street, zip: c.zip, town: c.town, country_id: c.country_id });
+						});
+						var label = c.name + (c.active ? '' : ' (' + T.RegisterInactive + ')');
+						$tbl.append($('<tr class="oddeven"></tr>')
+							.append($('<td></td>').text(label))
+							.append($('<td class="small"></td>').text(c.register))
+							.append($('<td class="small"></td>').text(c.street + ', ' + c.zip + ' ' + c.town))
+							.append($('<td></td>').append($use)));
+					});
+					$box.append($tbl);
+				})
+				.fail(function () { $box.empty().append(msg('error', T.RegisterError)); })
+				.always(function () { $rbtn.prop('disabled', false); });
+		});
+	}
+
 	$btn.on('click', function () {
 		var vatnum = $.trim($vat.val());
 		$box.empty();
@@ -99,6 +144,11 @@ jQuery(document).ready(function ($) {
 			$box.append($dup);
 		}
 
+		applyData(r);
+	}
+
+	// Fill empty fields, list the fields that differ. Used for VIES and for the German register.
+	function applyData(r) {
 		var filled = [], conflicts = [], hasData = false;
 		$.each(fields, function (i, f) {
 			var newv = r[f.key];
