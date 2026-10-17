@@ -1,5 +1,6 @@
 # Dolibarr language file - sl_SI - euvatlookup
 ModuleEuVatLookupName = EU DDV iskanje
+ModuleEuVatLookupDesc = Preveri EU davčno številko v VIES in izpolni obrazec partnerja
 EuVatLookupDescription = Preveri EU davčno številko v VIES in izpolni obrazec partnerja
 EuVatLookupDescriptionLong = Doda gumb ob davčni številki na obrazcu partnerja. Davčna številka se preveri v uradnem EU sistemu VIES, naziv, naslov, pošta, kraj in država pa se vpišejo v obrazec. Prazna polja se izpolnijo, polja z drugačno vrednostjo se spremenijo le po potrditvi. Nič se ne shrani, dokler ne kliknete Shrani.
 EuVatLookupButton = Preveri VIES in izpolni

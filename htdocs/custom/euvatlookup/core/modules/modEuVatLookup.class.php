@@ -38,7 +38,8 @@ class modEuVatLookup extends DolibarrModules
 		$this->name = preg_replace('/^mod/i', '', get_class($this));
 		$this->description = 'EuVatLookupDescription';
 		$this->descriptionlong = 'EuVatLookupDescriptionLong';
-		$this->editor_name = 'Gregor Ljubic';
+		$this->editor_name = 'Gregor Ljubic - Radioglas';
+		$this->editor_url = 'https://www.radioglas.com';
 		$this->version = '1.0';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 		$this->picto = 'company';

@@ -1,5 +1,6 @@
 # Dolibarr language file - Source file is en_US - euvatlookup
 ModuleEuVatLookupName = EU VAT Lookup
+ModuleEuVatLookupDesc = Check an EU VAT number on VIES and fill the third party form
 EuVatLookupDescription = Check an EU VAT number on VIES and fill the third party form
 EuVatLookupDescriptionLong = Adds a button next to the VAT number on the third party form. The VAT number is checked on the official EU VIES service and the company name, address, zip, town and country are filled in the form. Empty fields are filled, fields with a different value are only changed after confirmation. Nothing is saved until you click Save.
 EuVatLookupButton = Check VIES and fill
