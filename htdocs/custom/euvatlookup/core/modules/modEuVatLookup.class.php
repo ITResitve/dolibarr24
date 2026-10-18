@@ -52,7 +52,7 @@ class modEuVatLookup extends DolibarrModules
 		);
 
 		$this->dirs = array();
-		$this->config_page_url = array('setup.php@euvatlookup');
+		$this->config_page_url = array();
 		$this->hidden = false;
 		$this->depends = array('modSociete');
 		$this->requiredby = array();
