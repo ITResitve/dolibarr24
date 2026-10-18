@@ -11,6 +11,7 @@ CREATE TABLE llx_furssi_invoice(
 	issue_datetime varchar(19) NOT NULL,
 	amount double(24,8) NOT NULL,
 	zoi varchar(32) NOT NULL,
+	operator_taxnumber varchar(8),
 	eor varchar(36),
 	status smallint DEFAULT 0 NOT NULL,
 	subsequent smallint DEFAULT 0 NOT NULL,

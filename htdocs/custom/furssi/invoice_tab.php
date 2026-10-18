@@ -75,7 +75,7 @@ if ($rec) {
 		'FursEnvironment' => dol_escape_htmltag($rec->environment),
 		'FursTries' => (int) $rec->nb_try.($rec->subsequent ? ' ('.$langs->trans('FursSubsequent').')' : ''),
 		'FursLastError' => dol_escape_htmltag((string) $rec->last_error),
-		'FursCodeRecord' => dol_escape_htmltag(FursCrypto::dataRecord($rec->zoi, getDolGlobalString('FURSSI_TAXNUMBER'), $rec->issue_datetime)),
+		'FursCodeRecord' => dol_escape_htmltag(FursCrypto::dataRecord($rec->zoi, FursClient::taxNumber(), $rec->issue_datetime)),
 	);
 	foreach ($rows as $k => $v) {
 		print '<tr><td class="titlefield">'.$langs->trans($k).'</td><td>'.$v.'</td></tr>';

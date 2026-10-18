@@ -18,8 +18,6 @@ FursEnvProd=Production
 FursEnvironment=Environment
 FursUrl=Service URL
 FURSSI_ENV=Environment
-FURSSI_TAXNUMBER=Tax number of the taxpayer (8 digits)
-FURSSI_OPERATOR_TAXNUMBER=Operator tax number (empty = foreign operator)
 FURSSI_SOFTWARE_TAXNUMBER=Software supplier tax number
 FURSSI_PREMISE_ID=Business premise mark (A-Z, 0-9)
 FURSSI_DEVICE_ID=Electronic device mark (A-Z, 0-9)
@@ -70,3 +68,10 @@ FursFiscalizeNow=Send to FURS now
 FursSendFailed=FURS: invoice rejected or not processed: %s
 FursSendPending=FURS: invoice not confirmed yet, will be retried automatically: %s
 FursResendPending=Resend pending invoices to FURS
+FURSSI_TAXNUMBER=Tax number of the taxpayer (from Company/Organization VAT ID)
+FURSSI_OPERATOR_TAXNUMBER=Operator tax number
+FursTaxNumberMissing=VAT ID missing or not 8 digits in Company/Organization setup
+FursTaxNumberFromCompany=(edit in Company/Organization)
+FursOperatorFromUser=Taken from the field "National registration number" on each user card; empty = foreign operator
+FursYourValue=your user
+FursYourValueMissing=your user has no 8 digit number

@@ -42,6 +42,44 @@ class FursClient
 	}
 
 	/**
+	 * Reduce a VAT/tax identifier (e.g. "SI12345678", "SI 12345678") to the 8 digit Slovenian tax number.
+	 *
+	 * @param  string $value Raw value
+	 * @return string        8 digits or '' if not valid
+	 */
+	public static function normalizeTaxNumber($value)
+	{
+		$digits = preg_replace('/\D/', '', (string) $value);
+		return strlen($digits) == 8 ? $digits : '';
+	}
+
+	/**
+	 * Tax number of the taxpayer: taken from Setup > Company/Organization (VAT ID).
+	 *
+	 * @return string 8 digits or ''
+	 */
+	public static function taxNumber()
+	{
+		global $mysoc;
+		return self::normalizeTaxNumber(is_object($mysoc) ? $mysoc->tva_intra : getDolGlobalString('MAIN_INFO_TVAINTRA'));
+	}
+
+	/**
+	 * Tax number of the operator issuing the invoice: field "National registration number" of the user.
+	 * Without a user (cron, API without user) the taxpayer number is used (invoice issued without a person present).
+	 *
+	 * @param  User|null $user User
+	 * @return string          8 digits, or '' when the user has no Slovenian tax number (foreign operator)
+	 */
+	public static function operatorTaxNumber($user)
+	{
+		if (!is_object($user) || empty($user->id)) {
+			return self::taxNumber();
+		}
+		return self::normalizeTaxNumber($user->national_registration_number);
+	}
+
+	/**
 	 * Environment: 'test' or 'prod'
 	 *
 	 * @return string
@@ -199,7 +237,7 @@ class FursClient
 	 */
 	public function registerPremise($close = false)
 	{
-		$tax = getDolGlobalString('FURSSI_TAXNUMBER');
+		$tax = FursClient::taxNumber();
 		$bp = array(
 			'TaxNumber' => (int) $tax,
 			'BusinessPremiseID' => getDolGlobalString('FURSSI_PREMISE_ID'),
@@ -303,7 +341,7 @@ class FursClient
 	 */
 	public function isEligible($invoice, $event)
 	{
-		if (getDolGlobalString('FURSSI_TAXNUMBER') === '' || getDolGlobalString('FURSSI_PREMISE_ID') === '' || getDolGlobalString('FURSSI_DEVICE_ID') === '') {
+		if (FursClient::taxNumber() === '' || getDolGlobalString('FURSSI_PREMISE_ID') === '' || getDolGlobalString('FURSSI_DEVICE_ID') === '') {
 			return false;
 		}
 		$mode = getDolGlobalString('FURSSI_TRIGGER_MODE', 'paid_cash');
@@ -347,7 +385,7 @@ class FursClient
 		if (!$cred) {
 			return -1;
 		}
-		$tax = getDolGlobalString('FURSSI_TAXNUMBER');
+		$tax = FursClient::taxNumber();
 		$number = self::invoiceNumber($invoice);
 		$premise = getDolGlobalString('FURSSI_PREMISE_ID');
 		$device = getDolGlobalString('FURSSI_DEVICE_ID');
@@ -358,8 +396,10 @@ class FursClient
 			$this->error = 'Cannot compute ZOI';
 			return -1;
 		}
-		$sql = "INSERT INTO ".MAIN_DB_PREFIX."furssi_invoice(entity, fk_facture, environment, invoice_number, premise_id, device_id, issue_datetime, amount, zoi, status, date_creation)";
-		$sql .= " VALUES (".((int) $conf->entity).", ".((int) $invoice->id).", '".$this->db->escape($this->env())."', '".$this->db->escape($number)."', '".$this->db->escape($premise)."', '".$this->db->escape($device)."', '".$this->db->escape($dt)."', ".((float) $amount).", '".$this->db->escape($zoi)."', 0, '".$this->db->idate(dol_now())."')";
+		global $user;
+		$operator = self::operatorTaxNumber($user);
+		$sql = "INSERT INTO ".MAIN_DB_PREFIX."furssi_invoice(entity, fk_facture, environment, invoice_number, premise_id, device_id, issue_datetime, amount, zoi, operator_taxnumber, status, date_creation)";
+		$sql .= " VALUES (".((int) $conf->entity).", ".((int) $invoice->id).", '".$this->db->escape($this->env())."', '".$this->db->escape($number)."', '".$this->db->escape($premise)."', '".$this->db->escape($device)."', '".$this->db->escape($dt)."', ".((float) $amount).", '".$this->db->escape($zoi)."', ".($operator !== '' ? "'".$this->db->escape($operator)."'" : "NULL").", 0, '".$this->db->idate(dol_now())."')";
 		if (!$this->db->query($sql)) {
 			$this->error = $this->db->lasterror();
 			return -1;
@@ -406,7 +446,7 @@ class FursClient
 
 		$amount = round((float) $rec->amount, 2);
 		$inv = array(
-			'TaxNumber' => (int) getDolGlobalString('FURSSI_TAXNUMBER'),
+			'TaxNumber' => (int) FursClient::taxNumber(),
 			'IssueDateTime' => $rec->issue_datetime,
 			'NumberingStructure' => getDolGlobalString('FURSSI_NUMBERING', 'B') == 'C' ? 'C' : 'B',
 			'InvoiceIdentifier' => array(
@@ -425,9 +465,8 @@ class FursClient
 		$inv['InvoiceAmount'] = $amount;
 		$inv['PaymentAmount'] = $amount;
 		$inv['TaxesPerSeller'] = array($taxes);
-		$operator = getDolGlobalString('FURSSI_OPERATOR_TAXNUMBER', getDolGlobalString('FURSSI_TAXNUMBER'));
-		if ($operator !== '') {
-			$inv['OperatorTaxNumber'] = (int) $operator;
+		if (!empty($rec->operator_taxnumber)) {
+			$inv['OperatorTaxNumber'] = (int) $rec->operator_taxnumber;
 		} else {
 			$inv['ForeignOperator'] = true;
 		}

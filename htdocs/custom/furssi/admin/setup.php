@@ -34,7 +34,7 @@ $action = GETPOST('action', 'aZ09');
 $client = new FursClient($db);
 
 $textfields = array(
-	'FURSSI_TAXNUMBER', 'FURSSI_OPERATOR_TAXNUMBER', 'FURSSI_SOFTWARE_TAXNUMBER', 'FURSSI_PREMISE_ID', 'FURSSI_DEVICE_ID',
+	'FURSSI_SOFTWARE_TAXNUMBER', 'FURSSI_PREMISE_ID', 'FURSSI_DEVICE_ID',
 	'FURSSI_CASH_CODES', 'FURSSI_CADASTRAL', 'FURSSI_BUILDING', 'FURSSI_SECTION', 'FURSSI_STREET', 'FURSSI_HOUSENO',
 	'FURSSI_HOUSENO_ADD', 'FURSSI_COMMUNITY', 'FURSSI_CITY', 'FURSSI_POSTCODE', 'FURSSI_VALIDITY_DATE',
 );
@@ -136,8 +136,10 @@ print '<div class="div-table-responsive-no-min"><table class="noborder centperce
 $rows = array(
 	'sep1' => $langs->trans('FursSectionGeneral'),
 	'FURSSI_ENV' => furssiSelect('FURSSI_ENV', array('test' => $langs->trans('FursEnvTest'), 'prod' => $langs->trans('FursEnvProd')), 'test'),
-	'FURSSI_TAXNUMBER' => furssiInput('FURSSI_TAXNUMBER', 10),
-	'FURSSI_OPERATOR_TAXNUMBER' => furssiInput('FURSSI_OPERATOR_TAXNUMBER', 10),
+	'FURSSI_TAXNUMBER' => (FursClient::taxNumber() !== '' ? '<strong>'.dol_escape_htmltag(FursClient::taxNumber()).'</strong>' : '<span class="error">'.$langs->trans('FursTaxNumberMissing').'</span>')
+		.' <a href="'.DOL_URL_ROOT.'/admin/company.php">'.$langs->trans('FursTaxNumberFromCompany').'</a>',
+	'FURSSI_OPERATOR_TAXNUMBER' => '<span class="opacitymedium">'.$langs->trans('FursOperatorFromUser').'</span>'
+		.(FursClient::operatorTaxNumber($user) !== '' ? ' - '.$langs->trans('FursYourValue').': <strong>'.dol_escape_htmltag(FursClient::operatorTaxNumber($user)).'</strong>' : ' - <span class="warning">'.$langs->trans('FursYourValueMissing').'</span>'),
 	'FURSSI_SOFTWARE_TAXNUMBER' => furssiInput('FURSSI_SOFTWARE_TAXNUMBER', 10),
 	'FURSSI_PREMISE_ID' => furssiInput('FURSSI_PREMISE_ID'),
 	'FURSSI_DEVICE_ID' => furssiInput('FURSSI_DEVICE_ID'),

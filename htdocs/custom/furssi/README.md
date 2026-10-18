@@ -4,7 +4,8 @@ Implements "Tehnične specifikacije za davčno potrjevanje računov" v3.2 (JSON/
 
 ## Setup
 1. Enable module *FURS fiscal verification*.
-2. Admin > Modules > Furssi > setup: tax number, premise mark, device mark, premise address/cadastre.
+2. Set the VAT ID (e.g. `SI12345678`) in Setup > Company/Organization: its 8 digits are the taxpayer tax number. Fill "National registration number" on each user card with the operator's 8 digit tax number (empty = sent as foreign operator; no user, e.g. cron/self-service, = taxpayer number).
+   Then Admin > Modules > Furssi > setup: premise mark, device mark, premise address/cadastre.
 3. Upload the `.p12` client certificate for the test (and later production) environment and set its password.
 4. Run **Test connection (echo)**, then **Register / update premise**.
 5. Keep environment on *Test* for at least two days before switching to *Production* (spec recommendation).

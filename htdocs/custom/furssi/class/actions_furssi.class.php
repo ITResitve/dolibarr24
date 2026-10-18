@@ -64,7 +64,7 @@ class ActionsFurssi
 
 		require_once DOL_DOCUMENT_ROOT.'/core/lib/pdf.lib.php';
 		try {
-			$record = FursCrypto::dataRecord($rec->zoi, getDolGlobalString('FURSSI_TAXNUMBER'), $rec->issue_datetime);
+			$record = FursCrypto::dataRecord($rec->zoi, FursClient::taxNumber(), $rec->issue_datetime);
 			$type = getDolGlobalString('FURSSI_CODE_TYPE', 'qr');
 
 			$pdf = pdf_getInstance();

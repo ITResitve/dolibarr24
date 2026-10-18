@@ -18,8 +18,6 @@ FursEnvProd=Produkcija
 FursEnvironment=Okolje
 FursUrl=Naslov storitve
 FURSSI_ENV=Okolje
-FURSSI_TAXNUMBER=Davčna številka zavezanca (8 številk)
-FURSSI_OPERATOR_TAXNUMBER=Davčna številka operaterja (prazno = tuj operater)
 FURSSI_SOFTWARE_TAXNUMBER=Davčna številka proizvajalca programske opreme
 FURSSI_PREMISE_ID=Oznaka poslovnega prostora (A-Z, 0-9)
 FURSSI_DEVICE_ID=Oznaka elektronske naprave (A-Z, 0-9)
@@ -70,3 +68,10 @@ FursFiscalizeNow=Pošlji na FURS zdaj
 FursSendFailed=FURS: račun zavrnjen ali ni obdelan: %s
 FursSendPending=FURS: račun še ni potrjen, poskus bo samodejno ponovljen: %s
 FursResendPending=Ponovno pošlji čakajoče račune na FURS
+FURSSI_TAXNUMBER=Davčna številka zavezanca (iz ID za DDV v podjetju/organizaciji)
+FURSSI_OPERATOR_TAXNUMBER=Davčna številka operaterja
+FursTaxNumberMissing=ID za DDV v nastavitvah podjetja/organizacije manjka ali nima 8 številk
+FursTaxNumberFromCompany=(uredi v podjetju/organizaciji)
+FursOperatorFromUser=Vzeto iz polja "Matična/EMŠO/identifikacijska številka" na kartici uporabnika; prazno = tuj operater
+FursYourValue=vaš uporabnik
+FursYourValueMissing=vaš uporabnik nima 8-mestne številke
